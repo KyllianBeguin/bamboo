@@ -1,0 +1,13 @@
+bamboo_version: 1
+dataset_name: test_data
+
+columns:
+  name:
+    _name: "name"
+    _type: "string"
+  surname:
+    _name: "surname"
+    _type: "string"
+  tea_or_coffee:
+    _name: "tea_or_coffee"
+    _type: "string"
