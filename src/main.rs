@@ -8,7 +8,7 @@ use std::collections::BTreeMap;
 #[derive(Parser)]
 struct Cli {
 	/// The path to the config file to read
-    #[arg(default_value = "config.yml")]
+    #[arg(default_value = "conf.yml")]
     path_config: std::path::PathBuf,
 }
 
@@ -28,6 +28,8 @@ struct ColumnConfig {
 	_name: String,
 	// Column type
 	_type: String,
+	// Column values
+	_values: Vec<String>
 }
 
 fn main() {
@@ -41,4 +43,8 @@ fn main() {
 	for (_, col_config) in &_config.columns {
 		println!("{:?}", col_config)
 	}
+	// TODO: Fix the column access
+	//for val in &_config.columns[0]._values {
+	//	println!("{:?}", val)
+	//}
 }
