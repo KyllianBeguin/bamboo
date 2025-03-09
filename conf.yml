@@ -1,0 +1,23 @@
+bamboo_version: 1
+dataset_name: test_data
+
+columns:
+  name:
+    _name: name
+    _type: string
+    _values:
+      - Dirk
+      - Arthur
+  surname:
+    _name: surname
+    _type: string
+    _values:
+      - Gently
+      - Dent
+  tea_or_coffee:
+    _name: tea_or_coffee
+    _type: string
+    _values:
+      - tea
+      - coffee
+      - unknown
