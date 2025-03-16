@@ -34,9 +34,17 @@ struct ColumnConfig {
 }
 
 fn write_output(_config: Config) -> std::io::Result<()> {
+    // Output fie - csv for now
     let mut output = fs::File::create("data.csv").expect("Failed to create file");
-    writeln!(output, "Hello Bamboo dataset : {}", _config.dataset_name)
-        .expect("Failed to write formatted data");
+    // csv header
+    let mut header = String::from("");
+    // let header: String = _config.columns.first_key_value()._name;
+    for (_, col_config) in &_config.columns {
+        header.push_str(&col_config._name);
+        header.push_str(";");
+    }
+    header.pop();
+    writeln!(output, "{}", header).expect("Failed to write formatted data");
     Ok(())
 }
 
@@ -51,8 +59,8 @@ fn main() {
         "Using bamboo version {} for dataset {}",
         dataset_config.bamboo_version, dataset_config.dataset_name
     );
-    //for (_, col_config) in &_config.columns {
-    //    println!("{:?}", col_config)
-    //}
+    // for (_, col_config) in &dataset_config.columns {
+    //     println!("{:?}", col_config)
+    // }
     write_output(dataset_config);
 }
