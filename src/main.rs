@@ -1,4 +1,5 @@
 use clap::Parser;
+use rand::seq::IndexedRandom;
 use serde::{Deserialize, Serialize};
 use serde_yaml;
 use std::collections::BTreeMap;
@@ -38,13 +39,31 @@ fn write_output(_config: Config) -> std::io::Result<()> {
     let mut output = fs::File::create("data.csv").expect("Failed to create file");
     // csv header
     let mut header = String::from("");
-    // let header: String = _config.columns.first_key_value()._name;
     for (_, col_config) in &_config.columns {
         header.push_str(&col_config._name);
         header.push_str(";");
     }
-    header.pop();
+    header.pop(); // Removes last ";"
     writeln!(output, "{}", header).expect("Failed to write formatted data");
+    let mut body = String::from("");
+    let mut record = String::from("");
+    let mut rng = rand::rng();
+    // must loop on a number of wished records
+    for n in 1..10 {
+        record.clear();
+        for (_, col_config) in &_config.columns {
+            // 1) select a value from column & push it to a record
+            record.push_str(&col_config._values.choose(&mut rng).unwrap());
+            // 3) push a ";" to the record
+            record.push_str(";");
+        }
+        record.pop(); // Removes last ";"
+        body.push_str(&record);
+        body.push_str("\n");
+    }
+    writeln!(output, "{}", body).expect("Failed to write formatted data");
+    // Note : adding \n between records works fine for duckdb processing
+    // writeln!(output, "ben;hoe;tea\nbecky;smash;coffee").expect("Failed to write formatted data");
     Ok(())
 }
 
